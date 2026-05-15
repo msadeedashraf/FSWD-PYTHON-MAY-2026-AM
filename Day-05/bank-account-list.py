@@ -129,4 +129,4 @@ main()
 # Check 0 deposit not allowed
 # Apply transaction fee for every withdrawal
 # Set an overdraft amount and allow withdrawal (not past that amount)
-
+# Print/save this statement in a txt file
