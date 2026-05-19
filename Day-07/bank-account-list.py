@@ -1,7 +1,9 @@
 balance = 1000.00
 overdraft = 100
 transactions = []
-
+FILE_NAME = "bank_statrment.txt"
+file_path = f"D:\\CBC\\FSD_Bill\\python\\FSWD-PYTHON-MAY-2026-AM\\Day-07\\statements\\{FILE_NAME}"
+    
 from datetime import datetime 
 
 
@@ -66,6 +68,62 @@ def withdraw(amount):
     print(f"New Balance is : {balance}")
 
 
+def create_statement():
+
+    if (transactions) == 0:
+        print("No transaction available")
+        return
+    
+    
+
+    with open(file_path, "w") as file:
+
+            file.write("============================================================\n")
+            file.write("                    SADEED NATIONAL BANK\n")
+            file.write("============================================================\n")
+            file.write("Account Holder : Student Demo Account\n")
+            file.write("Account Number : **** **** **** 1234\n")
+            file.write(f"Statement Date : {datetime.now()}\n")
+            file.write("Currency       : CAD\n")
+            file.write("============================================================\n\n")
+
+            file.write(
+                f"{'Date':<12}"
+                f"{'Time':<12}"
+                f"{'Description':<15}"
+                f"{'Money In':>12}"
+                f"{'Money Out':>12}"
+                f"{'Balance':>12}\n"
+            )
+
+            file.write("-" * 75 + "\n")
+
+            for transaction in transactions:
+
+                file.write(
+                    f"{transaction[0]:<12}"
+                    f"{transaction[1]:<12}"
+                    f"{transaction[2]:<15}"
+                    f"${transaction[3]:>11.2f}"
+                    f"${transaction[4]:>11.2f}"
+                    f"${transaction[5]:>11.2f}\n"
+                )
+
+            file.write("-" * 75 + "\n")
+            file.write(f"{'Closing Balance':>63}: ${balance:.2f}\n")
+            file.write("============================================================\n")
+
+            print("\n Successfully created the statement")
+            print(f"Saved at : {file_path}")
+
+
+def read_statement():
+    
+    with open(file_path, "r" ) as file:
+        print("\n")
+        print(file.read())
+
+
 def show_statement():
     if (transactions) == 0:
         print("No transaction available")
@@ -108,6 +166,8 @@ def menu():
         print("2. Withdraw")
         print("3. Show Statement")
         print("4. Quit")
+        print("5. Create Statement")
+        print("6. Read Statement from file")
         print("=====================================")
 
 
@@ -123,7 +183,7 @@ def main():
             print("Thankyou for using the world's best bank account")        
             break
             
-        if choice not in ["1", "2", "3"]:
+        if choice not in ["1", "2", "3","5", "6"]:
             print("Invalid choice")
             print("select correct option to continue from the menu")
             continue
@@ -138,8 +198,13 @@ def main():
 
         elif choice == '3' :
            show_statement()
+        
+        elif choice == '5' :
+           create_statement()
 
-            
+        elif choice == '6' :
+           read_statement()
+    
 main()
 
 
