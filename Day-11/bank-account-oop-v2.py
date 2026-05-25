@@ -1,5 +1,6 @@
 # Account Identity and Status
 #  Concepts Constructor, Object State, IBAN
+# If you wana generate IBAN from a python package https://schwifty.readthedocs.io/en/latest/examples.html#generation
 
 from datetime import datetime   
 import random
@@ -40,6 +41,9 @@ class BankAccount:
         return timestamp
 
     def deposit(self, amount):
+        if self.is_active == False:
+            return print(f"{self.account_holder} your account has to be active before depositing.\nContact the branch")
+
         if amount <= 0:
             print("Amount must be greater than zero")
             return
@@ -105,12 +109,19 @@ class BankAccount:
         print("==================================")
 
 
-
-
 account1 = BankAccount("Olu", 2000 )
 account1.activate_account()
+
 account1.deposit(500)
 account1.withdraw(300)
+account1.account_info()
+
+
+account2 = BankAccount("Clinton", 3000 )
+account2.deposit(1000)
+account2.account_info()
+
+account1.deposit(500)
 account1.account_info()
 
 
