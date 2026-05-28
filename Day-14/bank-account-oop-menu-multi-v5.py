@@ -3,6 +3,7 @@
 # If you wana generate IBAN from a python package https://schwifty.readthedocs.io/en/latest/examples.html#generation
 # Add a bank account opening and menu to operate the bank
 # How to have multiple accounts
+# Show Statements
 
 from datetime import datetime   
 import random
@@ -133,6 +134,45 @@ class BankAccount:
         print(f"Account Active      : {self.is_active}")
         print("==================================")
 
+        # =========================================================
+    # FUNCTION: SHOW STATEMENT ON SCREEN
+    # =========================================================
+
+    def show_statement(self):
+
+        if len(self.transactions) == 0:
+            print("\nNo transactions to display.")
+            return
+
+        print("\n==============================================================")
+        print("                    SADEED NATIONAL BANK")
+        print("==============================================================")
+
+        print(
+            f"{'Date':<12}"
+            f"{'Time':<12}"
+            f"{'Description':<15}"
+            f"{'Money In':>12}"
+            f"{'Money Out':>12}"
+            f"{'Balance':>12}"
+        )
+
+        print("-" * 75)
+
+        for transaction in self.transactions:
+            print(
+                f"{transaction['date']:<12}"
+                f"{transaction['time']:<12}"
+                f"{transaction['type']:<15}"
+                f"${transaction['money_in']:>11.2f}"
+                f"${transaction['money_out']:>11.2f}"
+                f"${transaction['balance']:>11.2f}"
+            )
+
+        print("-" * 75)
+        print(f"{'Closing Balance':>63}: ${self.balance:.2f}")
+
+
 def find_account(accounts):
     account_number = input("Enter the account number:")
     if account_number in accounts:
@@ -171,7 +211,8 @@ def main():
         print("6. Show Balance")
         print("7. Show Account Info")        
         print("8. List All Accounts")
-        print("9. Quit")
+        print("9. Show Statement")
+        print("10. Quit")
         print("=======================================")
 
         choice = input("Select an option: ")
@@ -218,8 +259,12 @@ def main():
         elif choice == "8":
             list_all_accounts(accounts)
         
-
         elif choice == "9":
+            account = find_account(accounts)
+            if account:
+                account.show_statement()
+
+        elif choice == "10":
             print("\nThank you for using our bank.")
             break
 
